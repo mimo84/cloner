@@ -6,7 +6,8 @@ if [ -z "$1" ]; then
 else
     user=$1
 fi
-# one level above from current directory
+
+# do all the cloning level above from current directory
 cd ..
 cloningFolder=bitbucket_repos
 mkdir -p "${cloningFolder}"
@@ -49,3 +50,4 @@ done
 rm personalrepos.txt
 rm gitlist.txt
 cd ..
+echo -e '\033[1;32m' "Done!" '\033[0m'
