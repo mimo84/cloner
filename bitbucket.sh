@@ -17,6 +17,7 @@ for role in owner member contributor admin
 do
   curl -u $user "https://api.bitbucket.org/2.0/repositories?pagelen=100&role=${role}" > "${role}.json"
   jq -r '.values[] | .links.clone[1].href' "${role}.json" > personalrepos.txt
+  rm "${role}.json"
 done
 
 for repo in `cat personalrepos.txt`
@@ -29,4 +30,5 @@ do
   git clone $repo
   cd ..
 done
+rm personalrepos.txt
 cd ..
