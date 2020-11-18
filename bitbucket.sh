@@ -47,4 +47,5 @@ do
   cd ..
 done
 rm personalrepos.txt
+rm gitlist.txt
 cd ..
