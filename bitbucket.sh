@@ -12,13 +12,13 @@ cd ..
 cloningFolder=bitbucket_repos
 mkdir -p "${cloningFolder}"
 cd "${cloningFolder}"
-# rm personalrepos.txt
-# for role in owner member contributor admin
-# do
-#   curl -u $user "https://api.bitbucket.org/2.0/repositories?pagelen=100&role=${role}" > "${role}.json"
-#   jq -r '.values[] | .links.clone[1].href' "${role}.json" >> personalrepos.txt
-#   rm "${role}.json"
-# done
+rm personalrepos.txt
+for role in owner member contributor admin
+do
+  curl -u $user "https://api.bitbucket.org/2.0/repositories?pagelen=100&role=${role}" > "${role}.json"
+  jq -r '.values[] | .links.clone[1].href' "${role}.json" >> personalrepos.txt
+  rm "${role}.json"
+done
 
 # remove duplicates
 awk '!a[$0]++' personalrepos.txt > gitlist.txt
@@ -56,7 +56,4 @@ do
 done
 )
 
-# rm personalrepos.txt
-# rm gitlist.txt
-# cd ..
 echo -e '\033[1;32m' "Done!" '\033[0m'
