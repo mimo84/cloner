@@ -1,6 +1,7 @@
 # Bitbucket / Github Cloner
 
 A simple script to download repos from bitbucket (mostly) and github.
+If the repository already exists the repository will just be updated if possible via git pull.
 
 ## bitbucket.sh
 
