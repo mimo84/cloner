@@ -7,13 +7,25 @@ else
     NAME=$1
 fi
 
-# Context can be users or orgs.
-# I am only interested in public user repositories at the moment
-# and in particular only mine.
-# CNTX={users|orgs};
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 CNTX=users
 PAGE=1
+
+cd ..
+mkdir -p github_repos
+cd github_repos
+current_directory=`pwd`
+
+(
 curl "https://api.github.com/$CNTX/$NAME/repos?page=$PAGE&per_page=100" |
-  grep -e 'git_url*' |
-  cut -d \" -f 4 |
-  xargs -L1 git clone
+grep -e 'ssh_url*' |
+cut -d \" -f 4 > gitlist.txt
+
+for repo in `cat gitlist.txt`
+do
+  echo "Cloning ${repo} under ${current_directory}"
+  sh "${SCRIPTPATH}/cloner.sh" $repo $current_directory
+done
+)
