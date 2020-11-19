@@ -19,3 +19,15 @@ depending on your own bitbucket structure.
 Inside each folder your repos are going to be cloned.
 
 Inspired by this: https://stackoverflow.com/questions/40429610/bitbucket-clone-all-team-repositories
+
+## github.sh
+
+### usage:
+
+```
+github.sh username
+```
+
+### result:
+
+it will create a github_repos above the script itself and clone all the public repos of that user.
