@@ -35,4 +35,5 @@ then
 else
   echo -e '\033[1;33m' "Cloning repo ${repo}" '\033[0m'
   git clone $repo
+  mr register
 fi
