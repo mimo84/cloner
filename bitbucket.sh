@@ -7,8 +7,7 @@ else
     user=$1
 fi
 
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
+SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # do all the cloning level above from current directory
 cd ..
@@ -31,7 +30,7 @@ current_directory=`pwd`
 (
 for repo in `cat gitlist.txt`
 do
-  echo "Cloning ${repo} under ${current_directory}"
+  echo "Cloning ${repo} under ${current_directory} - SCRIPT: ${SCRIPTPATH}"
   sh "${SCRIPTPATH}/cloner.sh" $repo $current_directory
 done
 )
