@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-    echo "Need to insert username and password in this format: `username:passoword`"
+    echo "Need to insert username and password in this format: `username:password`"
     exit 1
 else
     user=$1
