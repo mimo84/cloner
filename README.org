@@ -1,0 +1,51 @@
+* Bitbucket / Github Cloner
+
+A simple script to download repos from bitbucket (mostly) and github. If the
+repository already exists the repository will just be updated if possible via
+git pull.
+
+** github.sh
+
+*** Requirements
+
+1. [[https://cli.github.com][GitHub CLI]] installed and configured to access your repositories
+
+**** usage
+#+begin_src sh
+sh github.sh <desired clone path>
+#+end_src
+
+***** example
+#+begin_src sh
+sh github.sh ~/work/github_repos
+#+end_src
+
+During the execution the script will pause to allow for editing of the list of
+repositories to clone. Often with large organizations is possible to have quite
+a large number of repositories to clone, which is most of the times unwanted.
+
+**** Result
+
+The script will create folders per each organization and username, under which
+the repositories will be cloned.
+
+** bitbucket.sh
+
+*** Requirements
+jq: [https://stedolan.github.io/jq/]
+
+*** usage
+
+#+begin_src sh
+bitbucket.sh username:password
+#+end_src
+
+*** result
+
+it will create a bitbuckt_repos folder above the script itself and a number of subfolders
+depending on your own bitbucket structure.
+Inside each folder your repos are going to be cloned.
+
+Inspired by this: [https://stackoverflow.com/questions/40429610/bitbucket-clone-all-team-repositories]
+
+

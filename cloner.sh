@@ -15,10 +15,9 @@ else
 fi
 
 
-# Gets the user/project/team/etc of the repo to put it in a separate folder (works only for BitBucket)
-project_folder=`echo $repo | cut -d':' -f2 | cut -d'/' -f1`
+project_folder=$(echo "$repo" | cut -d':' -f2 | cut -d'/' -f1)
 mkdir -p "${current_directory}/${project_folder}"
-cd "${current_directory}/${project_folder}"
+pushd "${current_directory}/${project_folder}" || exit
 
 # If the repo exists then simply perform a git pull to update the project.
 # Assumes that changes have been already committed / pushed to the remote
@@ -28,12 +27,11 @@ repo_folder=`echo ${repo_folder_git%.git}`
 if [ -d "${repo_folder}" ]
 then
   (
-    cd "${repo_folder}"
+    pushd "${repo_folder}" || exit
     echo -e '\033[1;32m' "Updating repo ${repo}" '\033[0m'
     git pull
   )
 else
   echo -e '\033[1;33m' "Cloning repo ${repo}" '\033[0m'
-  git clone $repo
-  mr register
+  git clone "$repo"
 fi
