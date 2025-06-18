@@ -21,9 +21,9 @@ pushd "${current_directory}/${project_folder}" || exit
 
 # If the repo exists then simply perform a git pull to update the project.
 # Assumes that changes have been already committed / pushed to the remote
-repo_folder_git=`echo $repo | cut -d'/' -f2`
+repo_folder_git=$(echo "$repo" | cut -d'/' -f2)
 
-repo_folder=`echo ${repo_folder_git%.git}`
+repo_folder="${repo_folder_git%.git}"
 if [ -d "${repo_folder}" ]
 then
   (
