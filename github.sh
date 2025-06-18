@@ -11,31 +11,40 @@ else
 fi
 
 repos_list_file="$scriptpath/list.txt"
-echo '' > "$repos_list_file"
 
-if gh org list; then
-    echo "fetching repos in organizations"
-    for org in $(gh org list)
-    do
-        gh repo list "$org" --limit 1000 --source --json sshUrl -q '.[].sshUrl' >> "$repos_list_file"
-    done
+read -p "Do you want to fetch a new list of repositories? (Y/N): " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    # If yes, clear the list and fetch new repositories
+    echo "Fetching new repository list..."
+    echo '' > "$repos_list_file"
+
+    if gh org list; then
+        echo "Fetching repos in organizations..."
+        for org in $(gh org list); do
+            gh repo list "$org" --limit 1000 --source --json sshUrl -q '.[].sshUrl' >> "$repos_list_file"
+        done
+    fi
+
+    # Fetch personal repositories as well
+    gh repo list --limit 1000 --source --json sshUrl -q '.[].sshUrl' >> "$repos_list_file"
+else
+    # If no, just print a message and use the existing list
+    echo "Using the existing repository list from $repos_list_file"
 fi
-
-gh repo list --limit 1000 --source --json sshUrl -q '.[].sshUrl' >> "$repos_list_file"
- 
-if ! mkdir -p "$destination_path"; then
-    echo "Error: Could not create the directory $destination_path."
-    exit 1
-fi
-
-pushd "$destination_path" || { echo "Error: Could not change directory to $destination_path"; exit 1; }
-
 
 repo_count=$(wc -l < "$repos_list_file")
 if [ "$repo_count" -eq 0 ]; then
     echo "No repositories found in $repos_list_file"
     exit 1
 fi
+
+if ! mkdir -p "$destination_path"; then
+    echo "Error: Could not create the directory $destination_path."
+    exit 1
+fi
+
+pushd "$destination_path" || { echo "Error: Could not change directory to $destination_path"; exit 1; }
 
 echo "There are currently $repo_count repos ready to be cloned."
 echo "If you don't want to clone all of them, you can edit the file under $repos_list_file and then confirm continue."
