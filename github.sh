@@ -56,9 +56,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 1
 fi
 
-
 while read -r repo; do
     echo "Cloning: $repo under $destination_path"
     sh "${scriptpath}/cloner.sh" "$repo" "$destination_path"
 done < "$repos_list_file"
-
