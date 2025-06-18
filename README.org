@@ -24,6 +24,10 @@ During the execution the script will pause to allow for editing of the list of
 repositories to clone. Often with large organizations is possible to have quite
 a large number of repositories to clone, which is most of the times unwanted.
 
+Also, if the you already run the script the script will prompt whether you want
+to just keep reading from the existing list file so that the script will just
+attempt updating of those repositories.
+
 **** Result
 
 The script will create folders per each organization and username, under which
